@@ -1,0 +1,40 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: rt-chat-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7
+    container_name: rt-chat-redis
+    ports:
+      - "6379:6379"
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: rt-chat-server
+    env_file:
+      - .env
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+      - redis
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    container_name: rt-chat-client
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+
+volumes:
+  mongo_data:
