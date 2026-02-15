@@ -17,7 +17,7 @@
     "mongodb"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@socket.io/redis-adapter": "^8.3.0",
     "bcryptjs": "^3.0.2",
